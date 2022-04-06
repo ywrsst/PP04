@@ -1,0 +1,3 @@
+﻿  4주.cpp
+C:\Users\AAA\source\repos\homework\pp03\4주.cpp(25,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+  pp03.vcxproj -> C:\Users\AAA\source\repos\homework\x64\Debug\pp03.exe
