@@ -1,9 +1,7 @@
 #pragma once
-#include <iostream>
 #include <chrono>
 #include <thread>
-#include <Windows.h>
-
+#include "MConsolUtil.hpp"
 
 using namespace std;
 
@@ -11,21 +9,19 @@ namespace MuSeoun_Engine
 {
 	class MGameLoop
 	{
-	private :
+	private:
 		bool _isGameRunning;
+		MConsoleRenderer cRenderer;
+		chrono::system_clock::time_point startRenderTimePoint;
 
 	public:
-		MGameLoop() 
-		{
-			_isGameRunning = false;
-		}
-		~MGameLoop(){}
+		MGameLoop() { _isGameRunning = false; }
+		~MGameLoop() {}
 
 		void Run()
 		{
 			_isGameRunning = true;
-
-				Initialize();
+			Initialize();
 
 			while (_isGameRunning)
 			{
@@ -39,22 +35,40 @@ namespace MuSeoun_Engine
 		{
 			_isGameRunning = false;
 		}
-	private : 
 
+	private:
 		void Initialize()
 		{
-			SetCursorState(false);
+
 		}
+		void Release()
+		{
+		}
+
 		void Input()
 		{
-			if (GetAsyncKeyState(VK_SPACE) == -0x8000 || GetAsyncKeyState(VK_SPACE) == -0x8001)
-			{
+			chrono::system_clock::time_point startRenderTimePoint = chrono::system_clock::now();
 
-			}
-			else
-			{
+			float sum;
+			int count;
+			sum = 0;
+			count = 0;
+			cRenderer.Clear();
 
-			}
+
+
+			cRenderer.MoveCursor(10, 20);
+
+			cout << "Rendering...";
+			chrono::duration<double> renderDuration = chrono::system_clock::now() - startRenderTimePoint;
+			sum += renderDuration.count();
+			cout << "fps : " << renderDuration.count() << "sec" << endl;
+
+
+			string fps = "FPS(milliseconds) : " + to_string(renderDuration.count());
+			cRenderer.DrawString(fps);
+			
+
 		}
 		void Update()
 		{
@@ -62,34 +76,40 @@ namespace MuSeoun_Engine
 		}
 		void Render()
 		{
-			chrono::system_clock::time_point startRenderTimePoint = chrono::system_clock::now();
-			//system("cls");
-			cout << "Rendering...";
-			chrono::duration<double>renderDuration = chrono::system_clock::now() - startRenderTimePoint;
+			float sum;
+			int count;
+			sum = 0;
+			count = 0;
+			cRenderer.Clear();
+			
+				cRenderer.MoveCursor(10, 20);
 
-				cout << "Rendering speed : " << renderDuration.count() << "sec" << endl;
+				cout << "Rendering...";
+				chrono::duration<double> renderDuration = chrono::system_clock::now() - startRenderTimePoint;
+				sum += renderDuration.count();
+				cout << "fps : " << renderDuration.count() << "sec" << endl;
 
-				int remainingFrameTime = 100 - (int)(renderDuration.count() * 1000.0);
 
-				if (remainingFrameTime > 0)
-					this_thread::sleep_for(chrono::microseconds(remainingFrameTime));
-		}
-		void Release(){}
-
-	private://게임 사용 함수
-
-		void MoveCursor(short x, short y)
-		{
-			COORD position = { x,y };
-			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), position);
+				string fps = "FPS(milliseconds) : " + to_string(1/renderDuration.count());
+				cRenderer.DrawString(fps);
+				
 		}
 
-		void SetCursorState(bool visible)
-		{
-			CONSOLE_CURSOR_INFO consoleCursorInfo;
-			consoleCursorInfo.bVisible = visible;
-			consoleCursorInfo.dwSize = 1;
-			SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleCursorInfo);
-		}
+
+		//cout << "Rendering Speed : " << renderDuration.count() << "sec" << endl;
+
+		//int remainingFrameTime = 100 - (int)(renderDuration.count() * 1000.0);
+		//if (remainingFrameTime > 0)
+		//	this_thread::sleep_for(chrono::milliseconds(remainingFrameTime));
+
+
+
+
 	};
+
+
+
+
+
+
 }

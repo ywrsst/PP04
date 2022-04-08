@@ -1,2 +1,12 @@
 ﻿  main.cpp
+C:\Users\AAA\source\repos\homework\pp04\MGameLoop.hpp(64,31): warning C4244: '+=': '_Rep'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Rep=double
+          ]
+C:\Users\AAA\source\repos\homework\pp04\MGameLoop.hpp(89,32): warning C4244: '+=': '_Rep'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Rep=double
+          ]
   pp04.vcxproj -> C:\Users\AAA\source\repos\homework\x64\Debug\pp04.exe
